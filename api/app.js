@@ -11,7 +11,7 @@ const app = express();
 app.set('trust proxy', true);
 
 app.get('/', async(req, res) => {
-    res.json({ Welcome, you foolish person! })
+    res.json({ message: 'Welcome, you foolish person!' })
 })
 
 app.get('/api/hello', async (req, res) => {
