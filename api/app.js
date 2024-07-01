@@ -10,7 +10,7 @@ const app = express();
 // Trust the X-Forwarded-For header
 app.set('trust proxy', true);
 
-app.get('/', async(req, res) => {
+app.get('/api/', async(req, res) => {
     res.json({ message: 'Welcome, you foolish person!' })
 })
 
