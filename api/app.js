@@ -10,6 +10,10 @@ const app = express();
 // Trust the X-Forwarded-For header
 app.set('trust proxy', true);
 
+app.get('/', async(req, res) => {
+    res.json({ Welcome, you foolish person! })
+})
+
 app.get('/api/hello', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Guest';
     // const ip = req.ip === '::1' ? '127.0.0.1' : req.ip;
