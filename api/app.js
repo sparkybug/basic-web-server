@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('trust proxy', true);
 
 app.get('/api/', async(req, res) => {
-    res.json({ message: 'Welcome, you foolish person!' })
+    res.json({ message: 'Welcome, you foolish person!' });
 })
 
 app.get('/api/hello', async (req, res) => {
@@ -25,15 +25,14 @@ app.get('/api/hello', async (req, res) => {
     }
 
     let clientIp = req.ip || req.connection.remoteAddress;
-    // let formattedIp = ip.toString(clientIp);
 
     console.log(`Client IP: ${clientIp}`);
 
     if (clientIp === '::1' || clientIp === '127.0.0.1') {
-        clientIp = '8.8.8.8'; 
-    } else {
-        let formattedIp = ip.toString(clientIp);
-    } 
+        clientIp = '8.8.8.8';
+    }
+
+    let formattedIp = ip.isV6Format(clientIp) ? ip.toString(ip.toBuffer(clientIp)) : clientIp;
 
     try {
         // Get location data from IPinfo
@@ -42,14 +41,14 @@ app.get('/api/hello', async (req, res) => {
         console.log(locationResponse);
 
         // This is to obtain the longitude and latitude from locationResponse
-        const { city, location } = locationResponse.data; 
+        const { city, loc } = locationResponse.data; 
 
-        if (!location) {
+        if (!loc) {
             throw new Error('Location not available for IP address.');
         }
 
         // Get weather data from OpenWeatherMap
-        const [latitude, longitude] = location.split(',');
+        const [latitude, longitude] = loc.split(',');
         const weatherResponse = await axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
             params: {
                 lat: latitude,
@@ -65,7 +64,7 @@ app.get('/api/hello', async (req, res) => {
         const response = {
             client_ip: clientIp,
             location: city,
-            greeting: `Hello, ${visitorName}!, the temperature is ${temperature} degrees Celsius in ${city}`
+            greeting: `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${city}`
         };
 
         res.status(201).json(response);
@@ -75,7 +74,7 @@ app.get('/api/hello', async (req, res) => {
     }
 });
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
