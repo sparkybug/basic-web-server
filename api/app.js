@@ -13,10 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 // Trust the X-Forwarded-For header
 app.set('trust proxy', true);
 
-app.get('/api/', async(req, res) => {
-    res.json({ message: 'Welcome, you foolish person!' });
-})
-
 app.get('/api/hello', async (req, res) => {
     let visitorName = req.query.visitor_name || 'Guest';
 
