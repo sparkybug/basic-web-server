@@ -66,7 +66,7 @@ app.get('/api/hello', async (req, res) => {
             greeting: `Hello, ${visitorName}! The temperature is ${temperature} degrees Celsius in ${city}`
         };
 
-        res.status(201).json(response);
+        res.status(200).json(response);
     } catch (error) {
         console.error('Error handling /api/hello route', error);
         res.status(500).json({ error: 'Internal Server Error' });
