@@ -21,7 +21,7 @@ app.get('/api/hello', async (req, res) => {
     const visitorName = req.query.visitor_name || 'Guest';
 
     // Remove quotes if they exist
-    visitorName = visitorName.replace(/["']/g, "");
+    visitorName = visitorName.replace(/["']/, "");
 
     if (!visitorName) {
         throw new Error('Visitor name is required');
