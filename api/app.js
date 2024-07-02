@@ -18,7 +18,7 @@ app.get('/api/', async(req, res) => {
 })
 
 app.get('/api/hello', async (req, res) => {
-    const visitorName = req.query.visitor_name || 'Guest';
+    let visitorName = req.query.visitor_name || 'Guest';
 
     // Remove quotes if they exist
     visitorName = visitorName.replace(/["']/, "");
